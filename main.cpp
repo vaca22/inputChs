@@ -278,7 +278,7 @@ int main() {
     char hz[32];
     char ims[]="a";
     ims[1]=0;
-    long res = py2gb(1, ims, hz);
+    long res = py2gb(0, ims, hz);
     hz[2]=0;
     char dst_gbk[1024] = {0};
     char dst_utf8[1024] = {0};
