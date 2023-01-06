@@ -70,8 +70,7 @@ int Utf8ToGbk(char *src_str, size_t src_len, char *dst_str, size_t dst_len)
 
 
 
-#define USE_EXTRA1  //大写字母
-#define USE_EXTRA2  //希腊字母
+
 
 char lava_GetWordMode = 0;
 FILE *IME_fp=NULL;
