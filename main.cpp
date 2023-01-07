@@ -118,11 +118,8 @@ int main() {
     ims[1]=0;
     py2gb(0, ims, hz);
     hz[2]=0;
-    char dst_gbk[1024] = {0};
     char dst_utf8[1024] = {0};
     GbkToUtf8(hz, strlen(hz), dst_utf8, sizeof(dst_utf8));
     std::cout <<dst_utf8 << std::endl;
-
-
     return 0;
 }
