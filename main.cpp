@@ -114,68 +114,7 @@ long py2gb(int id, char* ims, char* buf)
     }
 
 
-    if (*ims == 'u')
-    {
-        if (len == 2)
-        {
-            num = *(ims + 1);
-        }
-        else
-        if (len == 3 && *(ims + 1) == 'u')
-        {
-            num = *(ims + 2);
-        }
-        else
-        {
-            return  -1;
-        }
-        if (num >= 'a' && num <= 'z')
-        {
-            *buf = 163;
-            *(buf + 1) = len * 32 + 32 + num;
-        }
-        else
-        if (num >= '1' && num <= '9')
-        {
-            *buf = 162;
-            *(buf + 1) = len * 52 + 24 + num;
-        }
-        else
-        {
-            return -1;
-        }
-        *(buf + 2) = 0;
-        return 0x00010001;
-    }
 
-
-    if (*ims == 'i')
-    {
-        if (len == 2)
-        {
-            num = *(ims + 1);
-        }
-        else
-        if (len == 3 && *(ims + 1) == 'i')
-        {
-            num = *(ims + 2);
-        }
-        else
-        {
-            return  -1;
-        }
-        if (num >= 'a' && num <= 'x')
-        {
-            *buf = 166;
-            *(buf + 1) = len * 32 + num;
-        }
-        else
-        {
-            return -1;
-        }
-        *(buf + 2) = 0;
-        return 0x00010001;
-    }
 
     // 独立拼音
     strcpy(fds, "a   e   m   n   o   ai  an  ao  ei  en  er  hm  ng  ou  ang eng hng");
