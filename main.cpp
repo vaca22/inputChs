@@ -114,9 +114,8 @@ void py2gb(int id, char* ims, char* buf)
 
 int main() {
     char hz[32];
-    char ims[]="a";
-    ims[1]=0;
-    py2gb(0, ims, hz);
+    char ims[]="li";
+    py2gb(10, ims, hz);
     hz[2]=0;
     char dst_utf8[1024] = {0};
     GbkToUtf8(hz, strlen(hz), dst_utf8, sizeof(dst_utf8));
