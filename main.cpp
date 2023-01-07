@@ -9,7 +9,6 @@ int GbkToUtf8(char *str_str, size_t src_len, char *dst_str, size_t dst_len) {
     iconv_t cd;
     char **pin = &str_str;
     char **pout = &dst_str;
-
     cd = iconv_open("utf8", "gbk");
     if (cd == 0)
         return -1;
@@ -18,7 +17,6 @@ int GbkToUtf8(char *str_str, size_t src_len, char *dst_str, size_t dst_len) {
         return -1;
     iconv_close(cd);
     *pout = 0;
-
     return 0;
 }
 
