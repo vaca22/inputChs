@@ -41,8 +41,6 @@ void py2gb(int id, char* ims, char* buf)
     {
         return;
     }
-
-
     // 独立拼音
     strcpy(fds, "a   e   m   n   o   ai  an  ao  ei  en  er  hm  ng  ou  ang eng hng");
     ptr = strstr(fds, ims);
@@ -106,10 +104,7 @@ void py2gb(int id, char* ims, char* buf)
         fseek(fp, (id << 1) + pos, 0);
         fread(buf, 1, num << 1, fp);
     }
-
     fclose(fp);
-
-
 }
 
 int main() {
