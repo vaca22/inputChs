@@ -100,26 +100,6 @@ FILE *IME_fp=NULL;
 
 
 
-int qw2gb(char* qwc, char* buf)
-{
-    char gb[4];
-    if (strlen(qwc) != 4)
-    {
-        return  -1;
-    }
-    gb[0] = *(qwc + 0) *10+*(qwc + 1) - 368;
-    gb[1] = *(qwc + 2) *10+*(qwc + 3) - 368;
-    gb[2] = 0;
-    if (gb[0] > 160 && gb[1] > 160)
-    {
-        strcpy(buf, gb);
-    }
-    else
-    {
-        return  -1;
-    }
-    return gb[1] << 8 | gb[0];
-}
 
 long py2gb(int id, char* ims, char* buf)
 {
