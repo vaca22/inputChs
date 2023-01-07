@@ -31,95 +31,24 @@ int GbkToUtf8(char *str_str, size_t src_len, char *dst_str, size_t dst_len)
     return 0;
 }
 
-int Utf8ToGbk(char *src_str, size_t src_len, char *dst_str, size_t dst_len)
-{
-    iconv_t cd;
-    char **pin = &src_str;
-    char **pout = &dst_str;
 
-    cd = iconv_open("gbk", "utf8");
-    if (cd == 0)
-        return -1;
-    memset(dst_str, 0, dst_len);
-    if (iconv(cd, pin, &src_len, pout, &dst_len) == -1)
-        return -1;
-    iconv_close(cd);
-    *pout = 0;
-
-    return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-char lava_GetWordMode = 0;
-FILE *IME_fp=NULL;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-long py2gb(int id, char* ims, char* buf)
+void py2gb(int id, char* ims, char* buf)
 {
     char fds[80];
     FILE *fp;
     char* ptr;
-    int max, pos, num, len, m;
+    int max, pos, num, len;
     len = strlen(ims);
     if (id < 0 || len <= 0 || len > 6)
     {
-        return  -1;
+        return;
     }
-
-
 
 
     // 独立拼音
     strcpy(fds, "a   e   m   n   o   ai  an  ao  ei  en  er  hm  ng  ou  ang eng hng");
     ptr = strstr(fds, ims);
-    if (ptr > 0 && ((ptr - fds)&3) == 0)
+    if (ptr != 0 && ((ptr - fds)&3) == 0)
     {
         pos = (ptr - fds) + 282;
     }
@@ -129,7 +58,7 @@ long py2gb(int id, char* ims, char* buf)
         strcpy(fds, "hbchdfgjklmnpqrshtwxyzh");
         if (!(ptr = strchr(fds,  *ims)))
         {// 声母不存在
-            return  -1;
+            return;
         }
         //ch sh zh
         if (*++ims == 'h')
@@ -158,17 +87,11 @@ long py2gb(int id, char* ims, char* buf)
         }
         if (!(ptr = strstr(fds, ims)))
         {// 韵母不存在
-            return  -1;
+            return;
         }
         pos = pos + (ptr - fds);
     }
-    if ((fp=IME_fp) == NULL)
-    {
-        if ((fp = fopen("py2gb.ime", "rb")) == NULL)
-        {
-            return  -1;
-        }
-    }
+    fp = fopen("py2gb.ime", "rb");
     fseek(fp, pos, 0);
     max = getc(fp) | getc(fp)<<8;
     if (max == -1 || max <= id)
@@ -184,20 +107,18 @@ long py2gb(int id, char* ims, char* buf)
         }
         fseek(fp, (id << 1) + pos, 0);
         fread(buf, 1, num << 1, fp);
-        *(buf + (num << 1)) = 0;
     }
-    if (IME_fp == NULL)
-    {
-        fclose(fp);
-    }
-    return (long)max << 16 | num;
+
+    fclose(fp);
+
+
 }
 
 int main() {
     char hz[32];
     char ims[]="a";
     ims[1]=0;
-    long res = py2gb(0, ims, hz);
+    py2gb(0, ims, hz);
     hz[2]=0;
     char dst_gbk[1024] = {0};
     char dst_utf8[1024] = {0};
